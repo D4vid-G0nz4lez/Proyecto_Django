@@ -1,0 +1,7 @@
+{% extends 'base.html' %} {% block title %}Welcome to Online Courses
+{%endblock%} {% block content %}
+
+<h1 class="mb-4">Welcome to Online Courses</h1>
+<p class="lead">Explore our wide range of courses and start learning today!</p>
+<a href="{% url 'course_list' %}" class="btn btn-primary">Browse Courses</a>
+{% endblock %}

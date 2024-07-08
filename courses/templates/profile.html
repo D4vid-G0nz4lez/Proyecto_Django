@@ -1,0 +1,22 @@
+{% extends 'base.html' %} {% block title %}{{ user.username }}'s Profile
+{%endblock%} {% block content %}
+<h1 class="mb-4">{{ user.get_full_name }}'s Profile</h1>
+<p><strong>Username:</strong> {{ user.username }}</p>
+<p><strong>Email:</strong> {{ user.email }}</p>
+
+<h2 class="mt-4">Enrolled Courses</h2>
+<ul class="list-group">
+  {% for enrollment in user.enrollments.all %}
+  <li class="list-group-item">
+    <a href="{% url 'course_detail' enrollment.course.id %}"
+      >{{ enrollment.course.title }}</a
+    >
+    <small class="text-muted"
+      >(Enrolled on: {{ enrollment.date_enrolled|date:"F d, Y" }})</small
+    >
+  </li>
+  {% empty %}
+  <li class="list-group-item">You are not enrolled in any courses yet.</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends 'base.html' %} {% block title %}{{ course.title }}{% endblock %} {%
+block content %}
+<h1 class="mb-4">{{ course.title }}</h1>
+<p class="lead">{{ course.description }}</p>
+<p><strong>Instructor:</strong> {{ course.instructor.get_full_name }}</p>
+
+<h2 class="mt-4">Lessons</h2>
+<ul class="list-group">
+  {% for lesson in course.lessons.all %}
+  <li class="list-group-item">{{ lesson.title }}</li>
+  {% empty %}
+  <li class="list-group-item">No lessons available for this course yet.</li>
+  {% endfor %}
+</ul>
+
+{% if user.is_authenticated %} {% if user in course.enrolled_students.all %}
+<p class="mt-4">You are enrolled in this course.</p>
+{% else %}
+<form method="post" action="{% url 'enroll_course' course.id %}">
+  {% csrf_token %}
+  <button type="submit" class="btn btn-success mt-4">Enroll in Course</button>
+</form>
+{% endif %} {% else %}
+<p class="mt-4">
+  Please <a href="{% url 'login' %}">login</a> to enroll in this course.
+</p>
+{% endif %} {% endblock %}
